@@ -16,9 +16,13 @@ public class Main {
         generateAndSendMessages(subscriber, "apple", 10);
         generateAndSendMessages(subscriber, "watch", 10);
         generateAndSendMessages(subscriber, "oil", 10);
-        subscriber.receive(new Message("apple", 10, Adjustment.Type.MULTIPLY));
+
+        sendAdjustment(subscriber, "apple", 10, Adjustment.Type.MULTIPLY);
+
         generateAndSendMessages(subscriber, "watch", 9);
-        subscriber.receive(new Message("watch", 1000, Adjustment.Type.ADD));
+
+        sendAdjustment(subscriber, "watch", 1000, Adjustment.Type.ADD);
+
         generateAndSendMessages(subscriber, "apple", 9);
     }
 
@@ -36,9 +40,23 @@ public class Main {
         double price;
         int numberOfSales;
         for (int i = 0; i < n; i++) {
-            price = random.nextDouble() * random.nextInt(100);
-            numberOfSales = random.nextInt(100);
+            price = random.nextDouble() * random.nextInt(100) + 1;
+            numberOfSales = random.nextInt(100) + 1;
             subscriber.receive(new Message(productName, price, numberOfSales));
         }
+    }
+
+    /**
+     * Send adjustment.
+     *
+     * @param subscriber subscriber to push the adjustment to
+     * @param productName product to adjust
+     * @param price adjustment price
+     * @param adjustmentType type of adjustment
+     * @throws NotAcceptingNewMessages thrown if pushing messages subscriber goes to paused state
+     */
+    private static void sendAdjustment(Subscriber subscriber, String productName, double price, Adjustment.Type adjustmentType)
+            throws NotAcceptingNewMessages {
+        subscriber.receive(new Message(productName, price, adjustmentType));
     }
 }

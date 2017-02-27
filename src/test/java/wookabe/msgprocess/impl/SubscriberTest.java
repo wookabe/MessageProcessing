@@ -125,7 +125,7 @@ public class SubscriberTest {
      */
     private void generateAndSendMessages(String productName, int n, double price, int numberOfSales) throws Exception {
         final Random random = new Random();
-        price = price == 0 ? random.nextDouble() * random.nextInt(100) : price;
+        price = price == 0 ? random.nextDouble() * random.nextInt(100) + 1: price;
         numberOfSales = numberOfSales == 0 ? random.nextInt(100) + 1 : numberOfSales;
 
         int sumOfNumberOfSales = Optional.ofNullable(generatedNumberOfSales.get(productName)).orElse(0);
