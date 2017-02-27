@@ -1,4 +1,4 @@
-package wookabe.msgprocess.impl;
+package wookabe.msgprocess.subscription;
 
 import org.junit.Before;
 import org.junit.Test;
